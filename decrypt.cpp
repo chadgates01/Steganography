@@ -1,107 +1,67 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+char binaryToASCII(string bits)
+{
+    int val = 0;
+    for(int i=bits.length()-1;i>=0;i--)
+    {
+        val = (val << 1) + (bits[i] - '0');
+    }
+    return (char)val;
+}
+
 int main()
 {
     ifstream encImage;
     ofstream encPlainText;
-    encPlainText.open("encPlainText.txt");
-    encImage.open("encryptionImage.ppm");
+    cout<<"1";
+    // encPlainText.open("encPlainText.txt");
+    encImage.open("encryptedImage.ppm");
     
+    cout<<"1";
+
     char ch;
     string pixelValue = "";
-    int newLine = 1;
 
+    cout<<"1";
 
-
-    if(encImage.is_open())
+    if(!encImage.is_open())
     {
-        //copy the header info
-        string type="", height="", width="", RGB="";
+        cout<<"Error while opening file";
+        return 1;
         
-        encImage>>type;
-        encImage>>width;
-        encImage>>height;
-        encImage>>RGB;
-
-        int count = 1;
+    }
+    //copy the header info
+    string type="", height="", width="", RGB="";
         
-        while(1)
-        {
-            bitset<8> charBinary(0);
-            if(count == 9)
-            {
-                encImage>>pixelValue;
-                if(stoi(pixelValue) % 2 == 1)
-                {
-                    break;
-                }
-                count = 1;
-                continue;
-            }
-            for(int i=7; i>=0; i--)
-            {
-                encImage>>pixelValue;
-                if(stoi(pixelValue) % 2 == 1)
-                {
-                    charBinary.set(i);
-                }
-            }
+    getline(encImage, type);
+    getline(encImage, width);
+    // getline(encImage, height);
+    getline(encImage, RGB);
 
-            char ch = (char)(charBinary.to_ulong());
-            cout<<ch;
-            count++;
-            // {
-            //     encImage<<to_string(stoi(pixelValue)&254)<<" ";
-            // }
-            //     else
-            //     {
-                    // encImage<<to_string(stoi(pixelValue)-1)<<" ";
-            //         encImage<<to_string(stoi(pixelValue)|1)<<" ";
-            //     }
-            //     newLine++;
-            //     if(newLine>3)
-            //     {
-            //         newLine = 1;
-            //         encImage<<endl;
-            //     }
-            // }
-        //     if(!plainText.eof())
-        //     {
-        //         encImage>>pixelValue;
-        //         encImage << to_string(stoi(pixelValue) & 254) <<" ";
-        //         newLine++;
-        //     }
-        //     else
-        //     {
-        //         encImage>>pixelValue;
-        //         encImage << to_string(stoi(pixelValue) | 1) <<" ";
-        //         newLine++;
-        //     }
-        //     if(newLine>3)
-        //     {
-        //         newLine = 1;
-        //         encImage<<endl;
-        //     }
-        // }
-
-        // while(!encImage.eof())
-        // {
-        //     encImage>>pixelValue;
-        //     encImage<<pixelValue<<" ";
-        //     newLine++;
-        //     if(newLine>3)
-        //     {
-        //         newLine = 1;
-        //         encImage<<endl;
-        //     }
-        // }
-        // while(getline(encImage, pixelValue))
-        // {
-        //     encImage<<pixelValue<<endl;
-        // }
+    // int count = 1;
+    string line;
+    string text="";
+    
+    while(1)
+    {
+        string pixelValue;
+        string binary = "";
+        for(int i =0;i<8;i++){
+            encImage>>pixelValue;
+            int pixel = stoi(pixelValue);
+            binary += to_string(pixel & 1);
+        }
+        encImage>>pixelValue;
+        int pixel = stoi(pixelValue);
+        text+= binaryToASCII(binary);
+        if(pixel & 1){
+            break;
         }
     }
+
+    cout<<text<<endl;
 
     // plainText.close();
     encImage.close();
