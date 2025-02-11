@@ -36,41 +36,29 @@ int main()
         {
             bitset<8> charBinary(ch);
 
-            for(int i=7; i>=0; i--)
+            for(int i=0; i<8; i++)
             {
                 image>>pixelValue;
-                if(charBinary.test(i) == 0)
-                {
-                    newImage<<to_string(stoi(pixelValue)&254)<<" ";
-                }
-                else
-                {
-                    // newImage<<to_string(stoi(pixelValue)-1)<<" ";
-                    newImage<<to_string(stoi(pixelValue)|1)<<" ";
-                }
-                newLine++;
-                if(newLine>3)
-                {
-                    newLine = 1;
-                    newImage<<endl;
-                }
+                int pixel = stoi(pixelValue);
+
+                pixel = (pixel & ~1)|charBinary[i];
+                newImage<<pixel<<" ";
             }
             if(!plainText.eof())
             {
                 image>>pixelValue;
-                newImage << to_string(stoi(pixelValue) & 254) <<" ";
-                newLine++;
+                int pixel = stoi(pixelValue);
+
+                pixel = (pixel & ~1);
+                newImage<<pixel<<" ";
             }
             else
             {
                 image>>pixelValue;
-                newImage << to_string(stoi(pixelValue) | 1) <<" ";
-                newLine++;
-            }
-            if(newLine>3)
-            {
-                newLine = 1;
-                newImage<<endl;
+                int pixel = stoi(pixelValue);
+
+                pixel = (pixel & ~1)|1;
+                newImage<<pixel<<" ";
             }
         }
 
