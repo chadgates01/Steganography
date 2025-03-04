@@ -7,7 +7,7 @@ int main()
     ifstream plainText;
     ofstream newImage;
     plainText.open("plainText.txt");
-    image.open("image.ppm");
+    image.open("4.ppm");
     newImage.open("encryptedImage.ppm");
     
     char ch;
@@ -29,12 +29,12 @@ int main()
         // newImage<<type<<width<<height<<RGB;
 
         newImage<<type<<endl;
-        newImage<<width<<" "<<height<<endl;
+        newImage<<width<<endl<<height<<endl;
         newImage<<RGB<<endl;
         
         while(plainText.get(ch))
         {
-            bitset<8> charBinary(ch);
+            bitset<8> charBinary((int)ch);
 
             for(int i=0; i<8; i++)
             {
@@ -62,20 +62,9 @@ int main()
             }
         }
 
-        // while(!image.eof())
-        // {
-        //     image>>pixelValue;
-        //     newImage<<pixelValue<<" ";
-        //     newLine++;
-        //     if(newLine>3)
-        //     {
-        //         newLine = 1;
-        //         newImage<<endl;
-        //     }
-        // }
         while(getline(image, pixelValue))
         {
-            newImage<<pixelValue<<endl;
+            newImage<<pixelValue<<" ";
         }
     }
 
