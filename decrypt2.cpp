@@ -31,11 +31,12 @@ int main()
         
     }
     //copy the header info
-    string type="", dimensions="", RGB="";
+    // string type="", dimensions="", RGB="";
+    string type="", height="", width="", RGB="";
         
     getline(encImage, type);
-    getline(encImage, dimensions);
-    // getline(encImage, height);
+    getline(encImage, width);
+    getline(encImage, height);
     getline(encImage, RGB);
 
     // int count = 1;
